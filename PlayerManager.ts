@@ -13,6 +13,15 @@ class PlayerManager extends hz.Component<typeof PlayerManager> {
         console.log(`added player: ${player.name.get()}`);
       },
     );
+
+    this.connectCodeBlockEvent(
+      this.entity,
+      hz.CodeBlockEvents.OnPlayerExitWorld,
+      (player: hz.Player) => {
+        this.playerMap.delete(player.id);
+        console.log(`deleted player: ${player.name.get()}`);
+      },
+    );
   }
 }
 hz.Component.register(PlayerManager);
