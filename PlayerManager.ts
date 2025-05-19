@@ -9,8 +9,7 @@ class PlayerManager extends hz.Component<typeof PlayerManager> {
       this.entity,
       hz.CodeBlockEvents.OnPlayerEnterWorld,
       (player: hz.Player) => {
-        this.playerMap.set(player.id, player);
-        console.log(`added player: ${player.name.get()}`);
+        this.handleOnPlayerEnter(player);
       },
     );
 
@@ -18,10 +17,23 @@ class PlayerManager extends hz.Component<typeof PlayerManager> {
       this.entity,
       hz.CodeBlockEvents.OnPlayerExitWorld,
       (player: hz.Player) => {
-        this.playerMap.delete(player.id);
-        console.log(`deleted player: ${player.name.get()}`);
+        this.handleOnPlayerExit(player);
       },
     );
+  }
+
+  private handleOnPlayerExit(player: hz.Player): void {
+    if (this.playerMap.has(player.id)) {
+      this.playerMap.delete(player.id);
+      console.log(`deleted player: ${player.name.get()}`);
+    }
+  }
+
+  private handleOnPlayerEnter(player: hz.Player): void {
+    if (!this.playerMap.has(player.id)) {
+      this.playerMap.set(player.id, player);
+      console.log(`added player ${player.name.get()}`);
+    }
   }
 }
 hz.Component.register(PlayerManager);
