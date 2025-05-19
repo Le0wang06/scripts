@@ -10,6 +10,7 @@ class PlayerManager extends hz.Component<typeof PlayerManager> {
       hz.CodeBlockEvents.OnPlayerEnterWorld,
       (player: hz.Player) => {
         this.playerMap.set(player.id, player);
+        console.log(`added player: ${player.name.get()}`);
       },
     );
   }
